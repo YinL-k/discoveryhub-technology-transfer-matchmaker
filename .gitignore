@@ -1,0 +1,47 @@
+# Python virtual environment
+venv/
+env/
+.venv/
+
+# Mac OS hidden files
+.DS_Store
+
+# Environment variables and secrets
+.env
+
+# Editor and IDE directories
+.vscode/
+.idea/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# DSSI large data and generated artifacts
+data/
+dataset/
+runs/
+logs/
+pairs.jsonl
+pairs_smoke.jsonl
+
+# Model and checkpoint files
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# Training cache / backup files
+*.bak
+*.tmp
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Backup files
+*.bak_*
+*.backup

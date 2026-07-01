@@ -1,0 +1,27 @@
+python -m discovery_ft.parse data
+Parsed 26648 usable records from data
+
+By source:
+  autm               6671
+  clinicaltrials     9977
+  uspto_patent       10000
+
+By side (this is the asymmetric-matching split):
+  document   16671
+  query      9977
+
+embedding_text length (chars): min=180 median=1548 max=8089
+
+--- one example per source ---
+
+[autm] side=document id=https://autm.net/about-tech-transfer/advocacy/autm-advocacy-update/autm-advocacy
+  title: AUTM-BIO Report Highlights Tech Transfer Benefits to US Economy. You Can Too.
+  embedding_text: AUTM-BIO Report Highlights Tech Transfer Benefits to US Economy. You Can Too.  AUTM believes that advocacy is a key component of our commitment to strengthening the technology transfer environment by working with key policy makers.  AUTM-BIO Report Highlights Tech Transfer Benefi...
+
+[clinicaltrials] side=query id=NCT07313410
+  title: Using Near-Infrared Light to Better Understand Peripheral Artery Disease
+  embedding_text: Using Near-Infrared Light to Better Understand Peripheral Artery Disease  The goal of this study is to better understand how blood flows and how oxygen is utilized in the lower limbs of people who suffer from peripheral artery disease. This study will also assess how these factor...
+
+[uspto_patent] side=document id=US-20250324955-A1
+  title: ZEBRAFISH MODEL OF HUMAN ACUTE MYELOID LEUKEMIA AND METHOD OF USE THEREOF
+  embedding_text: ZEBRAFISH MODEL OF HUMAN ACUTE MYELOID LEUKEMIA AND METHOD OF USE THEREOF  Genetically modified zebrafish, in which mutation combinations frequently identified in human AML are stably expressed in the stem cell population of the fish, are provided. The combination of mutations re...
