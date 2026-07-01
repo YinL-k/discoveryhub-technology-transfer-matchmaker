@@ -24,6 +24,19 @@ My work focused on the retrieval fine-tuning pipeline:
 5. Evaluated baseline and fine-tuned models with retrieval metrics.
 6. Documented limitations in the query-side data source.
 
+This repository includes the initial Qwen3-Embedding-0.6B pipeline and the later multilingual-e5-large Anvil fine-tuning/evaluation outputs. Large model checkpoints are intentionally excluded from GitHub.
+
+## Models Tested
+
+This project used two embedding-model settings:
+
+| Model | Role |
+|---|---|
+| Qwen3-Embedding-0.6B | Initial small embedding-model fine-tuning pipeline |
+| intfloat/multilingual-e5-large | Later Anvil-based fine-tuning and evaluation run |
+
+The full fine-tuned E5-large checkpoint is not included in this repository because it contains large model weight files. The E5 evaluation reports and artifact description files are included instead.
+
 ## Data Sources
 
 The project used three main student data sources:
@@ -48,7 +61,14 @@ A key limitation is that ClinicalTrials.gov records are not ideal company-intere
 │   └── evaluate.py           # Evaluate retrieval performance
 ├── reports/
 │   ├── inspect_with_uspto_raw_20260624.txt
-│   └── qwen06b_baseline_school_20260630_205624.txt
+│   ├── qwen06b_baseline_school_20260630_205624.txt
+│   ├── e5_large_base_eval.txt
+│   └── e5_large_eval.txt
+├── artifacts/
+│   └── e5_large_ft_20260630/
+│       ├── README_SHARE.txt
+│       └── file_tree.txt
+├── RESULTS.md                # Summary of data counts and E5-large evaluation results
 ├── Makefile                  # Common pipeline commands
 ├── requirements.txt          # Python dependencies
 ├── .gitignore                # Excludes large data/model artifacts
@@ -124,6 +144,8 @@ The main training script is:
 discovery_ft/train.py
 ```
 
+The initial code path was organized around Qwen3-Embedding-0.6B. Later, I also ran an Anvil-based fine-tuning and evaluation experiment with intfloat/multilingual-e5-large.
+
 The training objective is retrieval-oriented: the model learns to place a query closer to its positive document and farther from hard negatives.
 
 ## Evaluation
@@ -138,7 +160,22 @@ Evaluation uses standard retrieval metrics:
 | MRR@10 | Mean reciprocal rank within the top 10 |
 | Median rank | Median position of the correct document; lower is better |
 
-Small report outputs are included in `reports/`. Larger model outputs and generated datasets are stored outside this repository.
+Small report outputs are included in `reports/`. A concise results summary is available in `RESULTS.md`.
+
+The E5-large fine-tuned model produced the following evaluation result:
+
+| Model | Setting | Recall@1 | Recall@5 | Recall@10 | MRR@10 | Median Rank |
+|---|---|---:|---:|---:|---:|---:|
+| intfloat/multilingual-e5-large | fine-tuned | 0.313 | 0.531 | 0.623 | 0.406 | 4 |
+
+The corresponding E5 report files are:
+
+```text
+reports/e5_large_base_eval.txt
+reports/e5_large_eval.txt
+```
+
+Larger model outputs and generated datasets are stored outside this repository.
 
 ## Large Files Not Included
 
@@ -161,6 +198,13 @@ pairs_smoke.jsonl
 ```
 
 These include raw data, generated datasets, model checkpoints, optimizer states, and logs. Some files are hundreds of MB to several GB, so they are not appropriate for a normal GitHub code repository.
+
+The complete E5-large fine-tuned model folder contains large checkpoint files such as `model.safetensors`, so the full model is not uploaded to GitHub. Instead, this repository includes:
+
+```text
+artifacts/e5_large_ft_20260630/README_SHARE.txt
+artifacts/e5_large_ft_20260630/file_tree.txt
+```
 
 Important artifacts were stored separately on shared project storage:
 
