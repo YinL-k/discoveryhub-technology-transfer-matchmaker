@@ -173,42 +173,6 @@ Both embedding models improved after fine-tuning. E5 Large had the larger relati
 
 Small report outputs are included in `reports/`. Larger model outputs and generated datasets are stored outside this repository.
 
-## Large Files Not Included
-
-Large generated artifacts are intentionally excluded from this repository through `.gitignore`.
-
-Excluded files and folders include:
-
-```text
-data/
-dataset/
-runs/
-logs/
-pairs.jsonl
-pairs_smoke.jsonl
-*.safetensors
-*.bin
-*.pt
-*.pth
-*.ckpt
-```
-
-These include raw data, generated datasets, model checkpoints, optimizer states, and logs. Some files are hundreds of MB to several GB, so they are not appropriate for a normal GitHub code repository.
-
-The complete E5-large fine-tuned model folder contains large checkpoint files such as `model.safetensors`, so the full model is not uploaded to GitHub. Instead, this repository includes:
-
-```text
-artifacts/e5_large_ft_20260630/README_SHARE.txt
-artifacts/e5_large_ft_20260630/file_tree.txt
-```
-
-Important artifacts were stored separately on shared project storage:
-
-```text
-/shared/discovery_hub_qwen06b_ft_results_20260624_ari/
-/shared/discovery_hub_e5_large_ft_results_20260630_ari/
-```
-
 ## How to Run
 
 Create and activate a Python environment:
