@@ -28,14 +28,14 @@ This repository includes the initial Qwen3-Embedding-0.6B pipeline and the later
 
 ## Models Tested
 
-This project used two embedding-model settings:
+This project tested two embedding-model settings:
 
 | Model | Role |
 |---|---|
 | Qwen3-Embedding-0.6B | Initial small embedding-model fine-tuning pipeline |
 | intfloat/multilingual-e5-large | Later Anvil-based fine-tuning and evaluation run |
 
-The full fine-tuned E5-large checkpoint is not included in this repository because it contains large model weight files. The E5 evaluation reports and artifact description files are included instead.
+Both models were evaluated before and after fine-tuning using the same retrieval metrics.
 
 ## Data Sources
 
@@ -68,7 +68,7 @@ A key limitation is that ClinicalTrials.gov records are not ideal company-intere
 │   └── e5_large_ft_20260630/
 │       ├── README_SHARE.txt
 │       └── file_tree.txt
-├── RESULTS.md                # Summary of data counts and E5-large evaluation results
+├── RESULTS.md                # Summary of data counts and model evaluation results
 ├── Makefile                  # Common pipeline commands
 ├── requirements.txt          # Python dependencies
 ├── .gitignore                # Excludes large data/model artifacts
@@ -144,8 +144,6 @@ The main training script is:
 discovery_ft/train.py
 ```
 
-The initial code path was organized around Qwen3-Embedding-0.6B. Later, I also ran an Anvil-based fine-tuning and evaluation experiment with intfloat/multilingual-e5-large.
-
 The training objective is retrieval-oriented: the model learns to place a query closer to its positive document and farther from hard negatives.
 
 ## Evaluation
@@ -160,22 +158,20 @@ Evaluation uses standard retrieval metrics:
 | MRR@10 | Mean reciprocal rank within the top 10 |
 | Median rank | Median position of the correct document; lower is better |
 
-Small report outputs are included in `reports/`. A concise results summary is available in `RESULTS.md`.
+The main evaluation format compares each model before and after fine-tuning. A more detailed results summary is available in `RESULTS.md`.
 
-The E5-large fine-tuned model produced the following evaluation result:
+## Model Comparison Summary
 
 | Model | Setting | Recall@1 | Recall@5 | Recall@10 | MRR@10 | Median Rank |
 |---|---|---:|---:|---:|---:|---:|
-| intfloat/multilingual-e5-large | fine-tuned | 0.313 | 0.531 | 0.623 | 0.406 | 4 |
+| E5 Large | Baseline | 0.182 | 0.313 | 0.371 | 0.238 | 42 |
+| E5 Large | Fine-tuned | 0.313 | 0.531 | 0.623 | 0.406 | 4 |
+| Qwen3-Embedding-0.6B | Baseline | 0.281 | 0.464 | 0.543 | 0.359 | 7 |
+| Qwen3-Embedding-0.6B | Fine-tuned | 0.346 | 0.582 | 0.673 | 0.447 | 3 |
 
-The corresponding E5 report files are:
+Both embedding models improved after fine-tuning. E5 Large had the larger relative gain because its baseline performance was weaker, while Qwen3-Embedding-0.6B started stronger and still improved clearly after fine-tuning.
 
-```text
-reports/e5_large_base_eval.txt
-reports/e5_large_eval.txt
-```
-
-Larger model outputs and generated datasets are stored outside this repository.
+Small report outputs are included in `reports/`. Larger model outputs and generated datasets are stored outside this repository.
 
 ## Large Files Not Included
 
@@ -270,6 +266,7 @@ Future improvements should include:
 1. Scraping real company R&D pages, pipeline pages, and open-innovation interest pages.
 2. Building a hand-labeled evaluation set of company-interest to invention/patent matches.
 3. Comparing multiple embedding models under the same evaluation protocol.
+4. Improving the quality of hard negatives and query-document labels.
 
 ## Author
 
